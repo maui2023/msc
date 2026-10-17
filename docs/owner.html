@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Pemilik MotoSewa — Dashboard & Operasi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/mockup.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <div class="d-flex">
+
+    <!-- ========================================================
+         DESKTOP SIDEBAR (Collapsible to Offcanvas on Mobile)
+         ======================================================== -->
+    <aside class="owner-sidebar d-none d-lg-flex flex-column p-3">
+      <div class="d-flex align-items-center gap-2 mb-4 px-2">
+        <span class="badge bg-warning text-dark p-2 rounded-3"><i class="bi bi-bicycle fs-5"></i></span>
+        <div>
+          <h6 class="mb-0 fw-bold text-white">MotoSewa</h6>
+          <small class="text-white-50" style="font-size: 0.7rem;">Portal Pengusaha Kedai</small>
+        </div>
+      </div>
+
+      <div class="px-2 mb-3">
+        <div class="p-2 bg-dark rounded-3 border border-secondary border-opacity-50">
+          <small class="text-white-50 d-block" style="font-size: 0.65rem;">KEDAI SEWAAN AKTIF</small>
+          <strong class="text-white small d-block text-truncate">Cameron Moto Rental</strong>
+          <span class="badge bg-success" style="font-size: 0.65rem;"><i class="bi bi-patch-check-fill"></i> Disahkan Aktif</span>
+        </div>
+      </div>
+
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="#tab-dashboard" class="nav-link active" data-bs-toggle="pill">
+            <i class="bi bi-speedometer2"></i> Papan Pemuka
+          </a>
+        </li>
+        <li>
+          <a href="#tab-bookings" class="nav-link" data-bs-toggle="pill">
+            <i class="bi bi-calendar2-check"></i> Senarai Tempahan
+            <span class="badge bg-warning text-dark ms-auto" style="font-size: 0.7rem;">3 Hari Ini</span>
+          </a>
+        </li>
+        <li>
+          <a href="#tab-fleet" class="nav-link" data-bs-toggle="pill">
+            <i class="bi bi-motorcycle"></i> Inventori & Kadar
+          </a>
+        </li>
+        <li>
+          <a href="#tab-settlements" class="nav-link" data-bs-toggle="pill">
+            <i class="bi bi-cash-stack"></i> Penyata Settlement
+            <span class="badge bg-primary ms-auto" style="font-size: 0.65rem;">48 Jam</span>
+          </a>
+        </li>
+        <li>
+          <a href="#tab-subscription" class="nav-link" data-bs-toggle="pill">
+            <i class="bi bi-award"></i> Langganan SaaS
+            <span class="badge bg-info text-dark ms-auto" style="font-size: 0.65rem;">Trial 30h</span>
+          </a>
+        </li>
+      </ul>
+
+      <hr class="text-secondary">
+      <div class="d-flex align-items-center justify-content-between px-2">
+        <div class="small text-white-50" style="font-size: 0.75rem;">
+          <i class="bi bi-person-circle text-warning"></i> En. Shahrul (Owner)
+        </div>
+        <a href="index.html" class="btn btn-sm btn-outline-secondary py-0 px-2" title="Keluar ke Hub"><i class="bi bi-box-arrow-left"></i></a>
+      </div>
+    </aside>
+
+    <!-- ========================================================
+         MAIN CONTENT AREA (Responsive)
+         ======================================================== -->
+    <div class="owner-content d-flex flex-column">
+
+      <!-- Top Navbar for Both Desktop and Mobile -->
+      <nav class="navbar navbar-expand-lg navbar-white bg-white border-bottom sticky-top px-3 py-2 shadow-sm">
+        <div class="container-fluid p-0">
+          
+          <!-- Mobile Sidebar Toggle -->
+          <button class="btn btn-outline-secondary d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasOwnerSidebar">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+
+          <span class="navbar-brand fw-bold mb-0 text-dark fs-6 d-flex align-items-center gap-2">
+            <i class="bi bi-shop text-warning fs-5"></i> Cameron Moto Rental 
+            <span class="badge bg-light text-muted border d-none d-sm-inline" style="font-size: 0.7rem;">Tanah Rata, Cameron Highlands</span>
+          </span>
+
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <!-- Fast Walk-In Booking Trigger -->
+            <button class="btn btn-warning fw-bold btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#modalWalkInBooking">
+              <i class="bi bi-plus-circle-fill"></i> <span class="d-none d-sm-inline">Tambah</span> Tempahan Walk-In
+            </button>
+
+            <a href="renter.html" target="_blank" class="btn btn-outline-primary btn-sm d-none d-md-inline">
+              <i class="bi bi-eye"></i> Lihat Kedai Awam
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Body Tabs Content -->
+      <div class="p-3 p-md-4 flex-grow-1">
+
+        <div class="tab-content">
+
+          <!-- ==========================================
+               TAB 1: DASHBOARD RINGKASAN
+               ========================================== -->
+          <div class="tab-pane fade show active" id="tab-dashboard">
+            
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+              <div>
+                <h4 class="fw-bold mb-1">Papan Pemuka Operasi Kedai</h4>
+                <p class="text-muted small mb-0">Status serahan, pemulangan, armada motosikal dan ringkasan kutipan kewangan hari ini.</p>
+              </div>
+              <div class="d-flex gap-2">
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle p-2">
+                  <i class="bi bi-clock"></i> 17 Okt 2026, 10:45 AM (Asia/Kuala_Lumpur)
+                </span>
+              </div>
+            </div>
+
+            <!-- Operational Stats Row -->
+            <div class="row g-3 mb-4">
+              <div class="col-xl-3 col-sm-6">
+                <div class="stat-card">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <small class="text-muted d-block fw-semibold" style="font-size: 0.75rem;">SERAHAN HARI INI (PICKUP)</small>
+                      <h3 class="fw-bold text-primary mb-0">3 Unit</h3>
+                      <small class="text-success"><i class="bi bi-arrow-up-short"></i> 2 Telah Diserah</small>
+                    </div>
+                    <div class="stat-icon bg-primary-subtle text-primary">
+                      <i class="bi bi-key-fill"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="stat-card">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <small class="text-muted d-block fw-semibold" style="font-size: 0.75rem;">PEMULANGAN HARI INI</small>
+                      <h3 class="fw-bold text-warning mb-0">2 Unit</h3>
+                      <small class="text-muted">Dijangka sebelum 5:00 PM</small>
+                    </div>
+                    <div class="stat-icon bg-warning-subtle text-warning">
+                      <i class="bi bi-arrow-left-circle-fill"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="stat-card">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <small class="text-muted d-block fw-semibold" style="font-size: 0.75rem;">SEDANG DISEWA ATAS JALAN</small>
+                      <h3 class="fw-bold text-success mb-0">8 Unit</h3>
+                      <small class="text-muted">Daripada 12 jumlah armada</small>
+                    </div>
+                    <div class="stat-icon bg-success-subtle text-success">
+                      <i class="bi bi-bicycle"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="stat-card">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <small class="text-muted d-block fw-semibold" style="font-size: 0.75rem;">KUTIPAN KESELURUHAN (OKT)</small>
+                      <h3 class="fw-bold text-dark mb-0">RM 8,420</h3>
+                      <small class="text-muted">AffanPay: RM 6,100 | Tunai: RM 2,320</small>
+                    </div>
+                    <div class="stat-icon bg-info-subtle text-info">
+                      <i class="bi bi-wallet2"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Action Alert for Manual Walk-In -->
+            <div class="alert alert-warning border-warning shadow-sm rounded-3 d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-info-circle-fill fs-3 text-warning"></i>
+                <div>
+                  <strong class="d-block">Ada Pelanggan Walk-In atau Panggilan WhatsApp?</strong>
+                  <small class="text-muted">Gunakan butang <strong>Tambah Tempahan Walk-In</strong> untuk menyekat inventori kalendar serta-merta tanpa melalui AffanPay.</small>
+                </div>
+              </div>
+              <button class="btn btn-dark btn-sm fw-bold" data-bs-toggle="modal" data-bs-target="#modalWalkInBooking">
+                <i class="bi bi-pencil-square"></i> Rkod Walk-In Sekarang
+              </button>
+            </div>
+
+            <!-- Recent Bookings Operational Table -->
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+              <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0"><i class="bi bi-clock-history text-primary"></i> Tempahan Menanti Tindakan & Serahan</h6>
+                <div class="d-flex gap-2">
+                  <span class="badge bg-light text-dark border">Semua (5)</span>
+                  <span class="badge bg-success-subtle text-success border border-success-subtle">AffanPay Online (3)</span>
+                  <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">Walk-In Manual (2)</span>
+                </div>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 small">
+                  <thead class="table-light">
+                    <tr>
+                      <th>No Rujukan</th>
+                      <th>Penyewa & Sumber</th>
+                      <th>Motosikal</th>
+                      <th>Jadual Sewaan</th>
+                      <th>Status Bayaran & Kaedah</th>
+                      <th>Status Tempahan</th>
+                      <th>Tindakan Fizikal</th>
+                    </tr>
+                  </thead>
+                  <tbody id="owner-bookings-tbody">
+                    
+                    <!-- Row 1: Marketplace AffanPay (Ready for pickup) -->
+                    <tr>
+                      <td><strong>BK-20261017-8492</strong></td>
+                      <td>
+                        <span class="badge badge-affanpay mb-1"><i class="bi bi-globe"></i> Marketplace Online</span><br>
+                        <strong>M. Hafiz Razak</strong><br>
+                        <small class="text-muted">017-3829102</small>
+                      </td>
+                      <td>
+                        <strong>Yamaha NVX 155</strong><br>
+                        <span class="badge bg-secondary">VAA 8291</span>
+                      </td>
+                      <td>
+                        18 Okt, 10:00 AM ➔ 19 Okt, 10:00 AM<br>
+                        <span class="text-primary fw-semibold">Pakej 24 Jam (Weekend)</span>
+                      </td>
+                      <td>
+                        <strong>RM 142.00</strong><br>
+                        <span class="badge bg-success"><i class="bi bi-check2"></i> Paid (AffanPay)</span><br>
+                        <small class="text-muted" style="font-size: 0.65rem;">Termasuk Deposit RM50</small>
+                      </td>
+                      <td>
+                        <span class="badge bg-info text-dark">Ready for Pickup</span>
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-primary" onclick="openHandoverModal('BK-20261017-8492', 'Yamaha NVX 155', 'M. Hafiz Razak')">
+                          <i class="bi bi-camera"></i> Periksa & Serah Kunci
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Row 2: Walk-In Manual Cash (Ongoing) -->
+                    <tr>
+                      <td><strong>BK-MANUAL-7102</strong></td>
+                      <td>
+                        <span class="badge badge-owner-manual mb-1"><i class="bi bi-person-badge"></i> Walk-In Pemilik</span><br>
+                        <strong>Tan Wei Kiat</strong><br>
+                        <small class="text-muted">012-9844211</small>
+                      </td>
+                      <td>
+                        <strong>Yamaha Y15ZR</strong><br>
+                        <span class="badge bg-secondary">VAA 2319</span>
+                      </td>
+                      <td>
+                        17 Okt, 02:00 PM ➔ 18 Okt, 02:00 PM<br>
+                        <span class="text-primary fw-semibold">Pakej 24 Jam</span>
+                      </td>
+                      <td>
+                        <strong>RM 70.00</strong><br>
+                        <span class="badge bg-secondary">Paid (Tunai Pemilik)</span>
+                      </td>
+                      <td>
+                        <span class="badge bg-primary">Ongoing (Atas Jalan)</span>
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-success" onclick="showToast('Merekod pemulangan motosikal dan semakan keadaan fizikal.')">
+                          <i class="bi bi-box-arrow-in-down-left"></i> Sahkan Pulang
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Row 3: Marketplace AffanPay (Cancellation Pending) -->
+                    <tr class="table-light">
+                      <td><strong>BK-20261017-3310</strong></td>
+                      <td>
+                        <span class="badge badge-affanpay mb-1"><i class="bi bi-globe"></i> Marketplace Online</span><br>
+                        <strong>Siti Nur Aishah</strong><br>
+                        <small class="text-muted">019-4458921</small>
+                      </td>
+                      <td>
+                        <strong>Honda Vario 160</strong><br>
+                        <span class="badge bg-secondary">VAA 5541</span>
+                      </td>
+                      <td>
+                        19 Okt, 09:00 AM ➔ 20 Okt, 09:00 AM<br>
+                        <span class="text-muted">Pakej 24 Jam</span>
+                      </td>
+                      <td>
+                        <strong>RM 137.00</strong><br>
+                        <span class="badge bg-success">Paid (AffanPay)</span>
+                      </td>
+                      <td>
+                        <span class="badge bg-danger">Cancellation Pending</span>
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-danger" onclick="showToast('Permohonan batal disahkan oleh pemilik. Memproses refund 75% mengikut polisi snapshot.', 'success')">
+                          <i class="bi bi-check-circle"></i> Luluskan Refund 75%
+                        </button>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ==========================================
+               TAB 2: TEMPAHAN LENGKAP
+               ========================================== -->
+          <div class="tab-pane fade" id="tab-bookings">
+            <h4 class="fw-bold mb-3">Semua Tempahan & Ketersediaan</h4>
+            <div class="alert alert-info small">
+              Menunjukkan rekod tempahan daripada marketplace awam dan tempahan walk-in. Pemilik mengawal status serahan, pembatalan, dan bayaran manual.
+            </div>
+            <p class="text-muted small">Gunakan butang <strong>Tambah Tempahan Walk-In</strong> di bahagian atas untuk memasukkan pelanggan baharu.</p>
+          </div>
+
+          <!-- ==========================================
+               TAB 3: INVENTORI MOTOSIKAL & KADAR HARGA
+               ========================================== -->
+          <div class="tab-pane fade" id="tab-fleet">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <h4 class="fw-bold mb-1">Pengurusan Inventori Motosikal & Harga</h4>
+                <p class="text-muted small mb-0">Urus pakej kadar sewaan (12j, 24j, 36j, 48j) dan semak lejar audit harga.</p>
+              </div>
+              <button class="btn btn-primary btn-sm fw-bold" onclick="showToast('Membuka borang tambah motosikal baharu...')">
+                <i class="bi bi-plus-lg"></i> Tambah Motosikal
+              </button>
+            </div>
+
+            <div class="row g-3">
+              
+              <!-- Bike Card 1 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&auto=format&fit=crop&q=80" class="card-img-top" style="height: 160px; object-fit: cover;" alt="Yamaha NVX">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                      <h6 class="fw-bold mb-0">Yamaha NVX 155 ABS</h6>
+                      <span class="badge bg-success">Published</span>
+                    </div>
+                    <small class="text-muted d-block mb-2">No Plat: <strong>VAA 8291</strong> • 155 cc • Skuter</small>
+                    
+                    <div class="p-2 bg-light rounded-3 small mb-3" style="font-size: 0.75rem;">
+                      <strong class="d-block mb-1 text-secondary">Pakej Kadar Sewaan Aktif:</strong>
+                      <div class="d-flex justify-content-between"><span>12 Jam:</span> <strong>RM 55.00</strong></div>
+                      <div class="d-flex justify-content-between"><span>24 Jam (Hari Biasa):</span> <strong>RM 75.00</strong></div>
+                      <div class="d-flex justify-content-between"><span>24 Jam (Hujung Minggu):</span> <strong>RM 90.00</strong></div>
+                      <div class="d-flex justify-content-between"><span>48 Jam:</span> <strong>RM 170.00</strong></div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                      <button class="btn btn-sm btn-outline-secondary flex-grow-1" onclick="showToast('Membuka lejar audit harga bagi Yamaha NVX 155 (rental_price_ledger).')">
+                        <i class="bi bi-clock-history"></i> Lejar Audit
+                      </button>
+                      <button class="btn btn-sm btn-warning fw-semibold" onclick="showToast('Membuka penyunting kadar harga...')">
+                        <i class="bi bi-pencil"></i> Ubah Kadar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bike Card 2 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=600&auto=format&fit=crop&q=80" class="card-img-top" style="height: 160px; object-fit: cover;" alt="Yamaha Y15ZR">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                      <h6 class="fw-bold mb-0">Yamaha Y15ZR V2</h6>
+                      <span class="badge bg-success">Published</span>
+                    </div>
+                    <small class="text-muted d-block mb-2">No Plat: <strong>VAA 2319</strong> • 150 cc • Kapcai</small>
+                    
+                    <div class="p-2 bg-light rounded-3 small mb-3" style="font-size: 0.75rem;">
+                      <strong class="d-block mb-1 text-secondary">Pakej Kadar Sewaan Aktif:</strong>
+                      <div class="d-flex justify-content-between"><span>12 Jam:</span> <strong>RM 45.00</strong></div>
+                      <div class="d-flex justify-content-between"><span>24 Jam:</span> <strong>RM 70.00</strong></div>
+                      <div class="d-flex justify-content-between"><span>48 Jam:</span> <strong>RM 130.00</strong></div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                      <button class="btn btn-sm btn-outline-secondary flex-grow-1" onclick="showToast('Membuka lejar audit harga (rental_price_ledger).')">
+                        <i class="bi bi-clock-history"></i> Lejar Audit
+                      </button>
+                      <button class="btn btn-sm btn-warning fw-semibold" onclick="showToast('Membuka penyunting kadar harga...')">
+                        <i class="bi bi-pencil"></i> Ubah Kadar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bike Card 3 (Maintenance) -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                  <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 160px;">
+                    <i class="bi bi-tools fs-1"></i>
+                  </div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                      <h6 class="fw-bold mb-0">Honda RS-X 150</h6>
+                      <span class="badge bg-danger">Maintenance</span>
+                    </div>
+                    <small class="text-muted d-block mb-2">No Plat: <strong>VAA 9012</strong> • Diservis Brek & Tayar</small>
+                    
+                    <p class="small text-muted mb-3" style="font-size: 0.75rem;">
+                      Motosikal dalam status penyelenggaraan disekat secara automatik daripada sebarang tempahan di marketplace.
+                    </p>
+
+                    <button class="btn btn-sm btn-outline-success w-100" onclick="showToast('Status motosikal diubah kepada Published (Sedia Sewa).', 'success')">
+                      <i class="bi bi-check-circle"></i> Selesai Servis & Terbitkan Semula
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ==========================================
+               TAB 4: PENYATA SETTLEMENT (48 Jam Release)
+               ========================================== -->
+          <div class="tab-pane fade" id="tab-settlements">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <h4 class="fw-bold mb-1">Penyata Pelepasan Dana (Settlement Payouts)</h4>
+                <p class="text-muted small mb-0">Dana pembayaran online AffanPay disalurkan mengikut garis masa sasaran 48 jam.</p>
+              </div>
+              <span class="badge bg-success p-2">Bank: Maybank (5621-XXXX-4912)</span>
+            </div>
+
+            <!-- Settlement Timeline Visualization -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+              <h6 class="fw-bold mb-3"><i class="bi bi-diagram-3 text-primary"></i> Kitaran Pelepasan Wang Sasaran 48 Jam</h6>
+              
+              <div class="row text-center g-3">
+                <div class="col-md-4">
+                  <div class="p-3 bg-light rounded-3 border">
+                    <span class="badge bg-secondary mb-2">Fasa 1: 0 - 24 Jam</span>
+                    <h6 class="fw-bold mb-1">Gateway AffanPay</h6>
+                    <small class="text-muted d-block" style="font-size: 0.75rem;">Penyewa membuat bayaran online di checkout. Dana masuk ke akaun pemegang escrow AffanPay.</small>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3 bg-light rounded-3 border">
+                    <span class="badge bg-primary mb-2">Fasa 2: 24 - 48 Jam</span>
+                    <h6 class="fw-bold mb-1">Pelepasan ke Platform</h6>
+                    <small class="text-muted d-block" style="font-size: 0.75rem;">AffanPay melepaskan kelompok transaksi ke akaun MotoSewa selepas tempoh rekonsiliasi 24 jam.</small>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3 bg-success-subtle border border-success-subtle rounded-3">
+                    <span class="badge bg-success mb-2">Fasa 3: Tepat 48 Jam</span>
+                    <h6 class="fw-bold mb-1 text-success">Pelepasan ke Pemilik</h6>
+                    <small class="text-muted d-block" style="font-size: 0.75rem;">MotoSewa menyalurkan dana bersih (ditolak yuran/deposit) terus ke akaun bank pengusaha motosikal.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+              <div class="card-header bg-white py-3">
+                <h6 class="fw-bold mb-0">Rekod Pelepasan Semasa</h6>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 small">
+                  <thead class="table-light">
+                    <tr>
+                      <th>ID Settlement</th>
+                      <th>Tempahan</th>
+                      <th>Kutipan Kasar</th>
+                      <th>Potongan Yuran</th>
+                      <th>Amaun Bersih Pemilik</th>
+                      <th>Status Pelepasan</th>
+                      <th>Jangkaan Salur Bank</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>SETTLE-20261017-01</strong></td>
+                      <td>BK-20261017-8492 (Yamaha NVX)</td>
+                      <td>RM 142.00</td>
+                      <td>RM 2.00 (Fi Transaksi)</td>
+                      <td><strong>RM 90.00</strong> (+RM50 Deposit Disimpan)</td>
+                      <td><span class="badge bg-warning text-dark"><i class="bi bi-clock"></i> Pending Owner Release (Fasa 2)</span></td>
+                      <td>19 Okt 2026, 10:00 AM</td>
+                    </tr>
+                    <tr>
+                      <td><strong>SETTLE-20261015-88</strong></td>
+                      <td>BK-20261015-4192 (Honda Vario)</td>
+                      <td>RM 137.00</td>
+                      <td>RM 2.00</td>
+                      <td><strong>RM 85.00</strong></td>
+                      <td><span class="badge bg-success"><i class="bi bi-check-circle"></i> Released to Owner (Selesai)</span></td>
+                      <td>17 Okt 2026 (Ref: MBB-948192)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ==========================================
+               TAB 5: LANGGANAN SAAS PEMILIK
+               ========================================== -->
+          <div class="tab-pane fade" id="tab-subscription">
+            <h4 class="fw-bold mb-3">Model Langganan SaaS Pemilik</h4>
+            <p class="text-muted small">Berdasarkan Keputusan PRD Seksyen 17.4, MotoSewa menyokong pelan yang fleksibel untuk pemilik motosikal.</p>
+            
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="card border-primary border-2 shadow-sm rounded-4 p-3 bg-white">
+                  <span class="badge bg-primary mb-2 align-self-start">Pelan Aktif Anda</span>
+                  <h5 class="fw-bold">Percubaan Percuma 30 Hari</h5>
+                  <h3 class="fw-bold text-primary">RM 0 <span class="fs-6 text-muted fw-normal">/ 30 hari</span></h3>
+                  <p class="small text-muted">Baki percubaan: <strong>18 hari lagi</strong>.</p>
+                  <ul class="small ps-3 text-secondary mb-3">
+                    <li>Semua ciri marketplace diaktifkan</li>
+                    <li>Sokongan sehingga 20 motosikal</li>
+                    <li>Tiada komisen asas sewaan dikenakan</li>
+                  </ul>
+                  <button class="btn btn-outline-primary btn-sm disabled">Sedang Digunakan</button>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                  <h5 class="fw-bold">Kadar Tetap per Motosikal</h5>
+                  <h3 class="fw-bold text-dark">RM 15 <span class="fs-6 text-muted fw-normal">/ motor / 30 hari</span></h3>
+                  <p class="small text-muted">Sesuai untuk pengusaha dengan armada tetap.</p>
+                  <ul class="small ps-3 text-secondary mb-3">
+                    <li>Kadar berpatutan untuk pemilik aktif</li>
+                    <li>Simpanan snapshot harga pada lejar bil</li>
+                    <li>12 motor = RM 180 sebulan</li>
+                  </ul>
+                  <button class="btn btn-outline-dark btn-sm" onclick="showToast('Permintaan naik taraf pelan dihantar ke lejar langganan.')">Pilih Pelan Ini</button>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                  <h5 class="fw-bold">Kadar Kejayaan Sewaan</h5>
+                  <h3 class="fw-bold text-dark">RM 1 <span class="fs-6 text-muted fw-normal">/ tempahan berjaya</span></h3>
+                  <p class="small text-muted">Bayar hanya apabila motosikal anda disewa.</p>
+                  <ul class="small ps-3 text-secondary mb-3">
+                    <li>Tiada bayaran bulanan tetap</li>
+                    <li>RM1 dipotong automatik semasa settlement</li>
+                    <li>Sangat fleksibel pada musim cuti/luar musim</li>
+                  </ul>
+                  <button class="btn btn-outline-dark btn-sm" onclick="showToast('Permintaan naik taraf pelan dihantar ke lejar langganan.')">Pilih Pelan Ini</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ========================================================
+       MODAL: TEMPAHAN WALK-IN / MANUAL (PEMILIK)
+       ======================================================== -->
+  <div class="modal fade" id="modalWalkInBooking" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header bg-warning text-dark">
+          <h6 class="modal-title fw-bold"><i class="bi bi-person-badge-fill me-1"></i> Tambah Tempahan Walk-In (Manual)</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        
+        <form onsubmit="handleOwnerManualBookingSubmit(event)">
+          <div class="modal-body p-4 small">
+            
+            <div class="alert alert-info py-2 small mb-3">
+              <i class="bi bi-info-circle-fill"></i> Tempahan ini ditandakan sebagai <strong>"Direkod oleh Pemilik"</strong> dan tidak melalui checkout AffanPay. Inventori di marketplace akan disekat serta-merta.
+            </div>
+
+            <!-- Customer Details -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Nama Pelanggan Walk-In:</label>
+              <input type="text" class="form-control form-control-sm" id="manual-cust-name" placeholder="Contoh: Encik Ahmad Zaki" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">No Telefon (WhatsApp):</label>
+              <input type="text" class="form-control form-control-sm" placeholder="Contoh: 013-9821034" required>
+            </div>
+
+            <!-- Motorcycle Selector -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Pilih Motosikal Tersedia:</label>
+              <select class="form-select form-select-sm" id="manual-bike-select">
+                <option value="Yamaha Y15ZR (VAA 2319)" selected>Yamaha Y15ZR (VAA 2319) — Kapcai</option>
+                <option value="Yamaha NVX 155 (VAA 8291)">Yamaha NVX 155 (VAA 8291) — Skuter</option>
+                <option value="Honda Vario 160 (VAA 5541)">Honda Vario 160 (VAA 5541) — Skuter</option>
+              </select>
+            </div>
+
+            <!-- Duration & Amount -->
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label class="form-label fw-bold">Pakej Tempoh:</label>
+                <select class="form-select form-select-sm">
+                  <option selected>24 Jam</option>
+                  <option>12 Jam</option>
+                  <option>36 Jam</option>
+                  <option>48 Jam</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label fw-bold">Jumlah Diterima (RM):</label>
+                <input type="number" class="form-control form-control-sm" id="manual-amount" value="70.00" step="0.50" required>
+              </div>
+            </div>
+
+            <!-- Payment Method: Cash vs QR Manual -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Kaedah Pembayaran Manual:</label>
+              <select class="form-select form-select-sm" id="manual-method-select">
+                <option value="cash" selected>Wang Tunai (Cash di Kedai)</option>
+                <option value="qr_manual">DuitNow QR Manual (Imbas QR Pemilik)</option>
+              </select>
+            </div>
+
+            <!-- Owner Declaration Checkbox -->
+            <div class="form-check bg-light p-2 rounded-2 border">
+              <input class="form-check-input ms-1 me-2" type="checkbox" id="chkConfirmPaid" required>
+              <label class="form-check-label text-dark" for="chkConfirmPaid" style="font-size: 0.72rem;">
+                Saya mengesahkan bahawa bayaran sewaan telah diterima sepenuhnya ke tangan saya / disahkan masuk ke bank saya.
+              </label>
+            </div>
+
+          </div>
+          <div class="modal-footer bg-light border-0 py-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-sm btn-warning fw-bold text-dark">
+              <i class="bi bi-check-circle-fill"></i> Sahkan & Sekat Inventori
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL: PEMERIKSAAN SERAHAN KUNCI FIZIKAL
+       ======================================================== -->
+  <div class="modal fade" id="modalHandover" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header bg-primary text-white">
+          <h6 class="modal-title fw-bold"><i class="bi bi-clipboard-check me-1"></i> Pemeriksaan Serahan Kunci Motosikal</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4 small">
+          <div class="mb-3">
+            <span class="badge bg-secondary mb-1" id="ho-ref">BK-20261017-8492</span>
+            <h6 class="fw-bold mb-0" id="ho-bike">Yamaha NVX 155 ABS</h6>
+            <small class="text-muted" id="ho-renter">Penyewa: M. Hafiz Razak</small>
+          </div>
+
+          <h6 class="fw-bold small text-uppercase text-secondary mb-2" style="font-size: 0.7rem;">Senarai Semak Serahan Fizikal:</h6>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="c1" checked>
+            <label class="form-check-label" for="c1">Lesen memandu fizikal penyewa disemak (B2 / B Penuh)</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="c2" checked>
+            <label class="form-check-label" for="c2">2x Topi keledar & pelekap telefon diserahkan</label>
+          </div>
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="c3" checked>
+            <label class="form-check-label" for="c3">Gambar odometer & keadaan badan motosikal dirakam</label>
+          </div>
+
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label text-muted" style="font-size: 0.68rem;">BACAAN ODOMETER SEMASA (KM)</label>
+              <input type="number" class="form-control form-control-sm" value="14250">
+            </div>
+            <div class="col-6">
+              <label class="form-label text-muted" style="font-size: 0.68rem;">TAHAP PETROL</label>
+              <select class="form-select form-select-sm">
+                <option selected>Penuh (Full Tank)</option>
+                <option>3/4 Tank</option>
+                <option>1/2 Tank</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer bg-light border-0 py-2">
+          <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="button" class="btn btn-sm btn-primary fw-bold" onclick="completeHandover()">
+            <i class="bi bi-key-fill"></i> Sahkan Serah Kunci (Tukar ke Ongoing)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offcanvas Mobile Sidebar -->
+  <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasOwnerSidebar">
+    <div class="offcanvas-header border-bottom border-secondary">
+      <h6 class="offcanvas-title fw-bold text-warning"><i class="bi bi-bicycle"></i> MotoSewa Pemilik</h6>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-3">
+      <p class="small text-white-50">Cameron Moto Rental (Tanah Rata)</p>
+      <div class="d-grid gap-2">
+        <a href="#tab-dashboard" class="btn btn-outline-light text-start" data-bs-dismiss="offcanvas"><i class="bi bi-speedometer2 me-2"></i> Papan Pemuka</a>
+        <a href="#tab-fleet" class="btn btn-outline-light text-start" data-bs-dismiss="offcanvas"><i class="bi bi-motorcycle me-2"></i> Inventori & Kadar</a>
+        <a href="#tab-settlements" class="btn btn-outline-light text-start" data-bs-dismiss="offcanvas"><i class="bi bi-cash-stack me-2"></i> Penyata Settlement (48j)</a>
+        <a href="#tab-subscription" class="btn btn-outline-light text-start" data-bs-dismiss="offcanvas"><i class="bi bi-award me-2"></i> Langganan SaaS</a>
+        <hr class="border-secondary">
+        <a href="index.html" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Kembali ke Menu Mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/mockup.js"></script>
+  <script>
+    function openHandoverModal(ref, bike, renter) {
+      document.getElementById('ho-ref').innerText = ref;
+      document.getElementById('ho-bike').innerText = bike;
+      document.getElementById('ho-renter').innerText = 'Penyewa: ' + renter;
+      const modal = new bootstrap.Modal(document.getElementById('modalHandover'));
+      modal.show();
+    }
+
+    function completeHandover() {
+      const modalEl = document.getElementById('modalHandover');
+      const modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) modal.hide();
+      showToast('Kunci telah diserahkan! Status tempahan kini bertukar ke ONGOING.', 'success');
+    }
+  </script>
+</body>
+</html>

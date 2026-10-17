@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MotoSewa PWA — Penyewa Motosikal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/mockup.css" rel="stylesheet">
+</head>
+<body class="bg-dark">
+
+  <!-- Desktop Preview Toolbar (Allows testing & toggling phone view on desktop) -->
+  <div class="d-none d-md-flex justify-content-between align-items-center bg-dark text-white px-4 py-2 border-bottom border-secondary">
+    <div class="d-flex align-items-center gap-3">
+      <a href="index.html" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left"></i> Kembali ke Menu Mockup</a>
+      <span class="badge bg-primary">Mod Prototaip PWA Penyewa</span>
+      <span class="small text-white-50"><i class="bi bi-info-circle"></i> Direka bentuk khusus tanpa desktop (Mobile-First / PWA View)</span>
+    </div>
+    <div class="d-flex gap-2">
+      <button class="btn btn-sm btn-warning" onclick="switchPwaTab('checkout')"><i class="bi bi-clock"></i> Uji Hold 10 Minit</button>
+      <button class="btn btn-sm btn-info text-dark" onclick="switchPwaTab('license')"><i class="bi bi-person-vcard"></i> Uji Lesen per Motor</button>
+      <button class="btn btn-sm btn-danger" onclick="switchPwaTab('cancel')"><i class="bi bi-calculator"></i> Kalkulator Refund</button>
+    </div>
+  </div>
+
+  <!-- PWA Device Wrapper -->
+  <div class="pwa-device-wrapper">
+    
+    <div class="pwa-phone-frame shadow-lg">
+
+      <!-- Status Bar -->
+      <div class="pwa-status-bar">
+        <span>09:41</span>
+        <div class="pwa-notch"></div>
+        <div class="d-flex gap-2 align-items-center">
+          <i class="bi bi-wifi"></i>
+          <i class="bi bi-battery-full"></i>
+        </div>
+      </div>
+
+      <!-- App Header Bar -->
+      <div class="pwa-header-bar">
+        <div class="d-flex align-items-center gap-2">
+          <span class="bg-white text-primary rounded-circle p-1 d-inline-flex align-items-center justify-content-center" style="width: 28px; height: 28px;">
+            <i class="bi bi-bicycle fw-bold"></i>
+          </span>
+          <div>
+            <h6 class="mb-0 fw-bold lh-1">MotoSewa</h6>
+            <small class="text-white-50" style="font-size: 0.68rem;"><i class="bi bi-geo-alt-fill"></i> Cameron Highlands</small>
+          </div>
+        </div>
+        <div class="d-flex gap-2 align-items-center">
+          <button class="btn btn-sm btn-light py-0 px-2 rounded-pill fw-bold text-primary" style="font-size: 0.75rem;" onclick="showToast('Notifikasi: Tiada mesej baharu.')">
+            <i class="bi bi-bell"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Scrollable PWA Content Area -->
+      <div class="pwa-content-area" id="pwa-content">
+
+        <!-- ==========================================
+             SCREEN 1: CARIAN & EXPLORE (Default)
+             ========================================== -->
+        <div id="screen-explore" class="pwa-screen">
+          
+          <!-- Search Header Widget -->
+          <div class="pwa-card bg-primary text-white border-0 shadow-sm mb-3" style="background: linear-gradient(135deg, #0d6efd 0%, #0047b3 100%);">
+            <h6 class="fw-bold mb-1"><i class="bi bi-search me-1"></i> Cari Motosikal Sewa</h6>
+            <p class="small text-white-50 mb-3" style="font-size: 0.75rem;">Cameron Highlands & sekitar Pahang</p>
+            
+            <div class="bg-white rounded-3 p-2 text-dark mb-2">
+              <div class="d-flex align-items-center gap-2 pb-2 border-bottom">
+                <i class="bi bi-geo-alt text-danger"></i>
+                <div class="flex-grow-1">
+                  <small class="text-muted d-block" style="font-size: 0.65rem;">LOKASI PENGAMBILAN</small>
+                  <select class="form-select form-select-sm border-0 p-0 fw-bold shadow-none">
+                    <option selected>Tanah Rata, Cameron Highlands</option>
+                    <option>Brinchang</option>
+                    <option>Ringlet</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row g-2 pt-2">
+                <div class="col-6 border-end">
+                  <small class="text-muted d-block" style="font-size: 0.65rem;">PAKEJ TEMPOH</small>
+                  <select class="form-select form-select-sm border-0 p-0 fw-bold shadow-none" id="search-duration">
+                    <option value="12">12 Jam</option>
+                    <option value="24" selected>24 Jam (Sehari)</option>
+                    <option value="36">36 Jam</option>
+                    <option value="48">48 Jam (2 Hari)</option>
+                  </select>
+                </div>
+                <div class="col-6 ps-2">
+                  <small class="text-muted d-block" style="font-size: 0.65rem;">HARI SEWAAN</small>
+                  <span class="badge bg-warning text-dark fw-bold" style="font-size: 0.7rem;">Hujung Minggu</span>
+                </div>
+              </div>
+            </div>
+            
+            <button class="btn btn-warning w-100 fw-bold text-dark btn-sm py-2 shadow-sm" onclick="showToast('Menapis motosikal tersedia untuk 24 jam hujung minggu...')">
+              <i class="bi bi-funnel-fill"></i> Tapis Motosikal Tersedia
+            </button>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="d-flex gap-2 overflow-x-auto pb-2 mb-3 text-nowrap">
+            <button class="btn btn-sm btn-dark rounded-pill px-3 py-1 fw-semibold" style="font-size: 0.75rem;">Semua</button>
+            <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1" style="font-size: 0.75rem;">Skuter Automatik</button>
+            <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1" style="font-size: 0.75rem;">Kapcai (Moped)</button>
+            <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1" style="font-size: 0.75rem;">Touring (250cc+)</button>
+          </div>
+
+          <!-- Motocycle Card 1 (Yamaha NVX 155) -->
+          <div class="pwa-card">
+            <div class="position-relative mb-2">
+              <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&auto=format&fit=crop&q=80" class="pwa-bike-img" alt="Yamaha NVX">
+              <span class="position-absolute top-0 start-0 m-2 badge bg-success pwa-pill-badge">
+                <i class="bi bi-check-circle"></i> Tersedia Sekarang
+              </span>
+              <span class="position-absolute bottom-0 end-0 m-2 badge bg-dark pwa-pill-badge opacity-90">
+                155 cc • Auto
+              </span>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <div>
+                <h6 class="fw-bold mb-0">Yamaha NVX 155 ABS</h6>
+                <small class="text-muted" style="font-size: 0.7rem;"><i class="bi bi-shop text-primary"></i> Cameron Moto Rental</small>
+              </div>
+              <div class="text-end">
+                <span class="fw-bold text-primary fs-6">RM 90</span>
+                <small class="text-muted d-block" style="font-size: 0.65rem;">/ 24 Jam (Hujung Minggu)</small>
+              </div>
+            </div>
+
+            <div class="bg-light p-2 rounded-3 small mb-3" style="font-size: 0.72rem;">
+              <div class="d-flex justify-content-between text-muted mb-1">
+                <span><i class="bi bi-shield-check text-success"></i> Lesen Diperlukan:</span>
+                <strong class="text-dark">Kelas B2 / B Penuh</strong>
+              </div>
+              <div class="d-flex justify-content-between text-muted mb-1">
+                <span><i class="bi bi-box-seam text-secondary"></i> Termasuk:</span>
+                <span class="text-dark">2x Topi Keledar, Phone Holder</span>
+              </div>
+              <div class="d-flex justify-content-between text-muted">
+                <span><i class="bi bi-geo-alt text-danger"></i> Ambil di:</span>
+                <span class="text-dark text-truncate" style="max-width: 170px;">Stesen Bas Tanah Rata</span>
+              </div>
+            </div>
+
+            <button class="btn btn-primary w-100 fw-bold btn-sm py-2 shadow-sm" onclick="switchPwaTab('checkout')">
+              <i class="bi bi-lightning-charge-fill text-warning"></i> Tempah Pantas (Kunci 10 Minit)
+            </button>
+          </div>
+
+          <!-- Motocycle Card 2 (Honda Vario 160) -->
+          <div class="pwa-card">
+            <div class="position-relative mb-2">
+              <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=600&auto=format&fit=crop&q=80" class="pwa-bike-img" alt="Honda Vario">
+              <span class="position-absolute top-0 start-0 m-2 badge bg-success pwa-pill-badge">
+                <i class="bi bi-check-circle"></i> Tersedia
+              </span>
+              <span class="position-absolute bottom-0 end-0 m-2 badge bg-dark pwa-pill-badge opacity-90">
+                160 cc • Auto
+              </span>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <div>
+                <h6 class="fw-bold mb-0">Honda Vario 160 CBS</h6>
+                <small class="text-muted" style="font-size: 0.7rem;"><i class="bi bi-shop text-primary"></i> Highlands Bikers Hub</small>
+              </div>
+              <div class="text-end">
+                <span class="fw-bold text-primary fs-6">RM 85</span>
+                <small class="text-muted d-block" style="font-size: 0.65rem;">/ 24 Jam</small>
+              </div>
+            </div>
+
+            <div class="bg-light p-2 rounded-3 small mb-3" style="font-size: 0.72rem;">
+              <div class="d-flex justify-content-between text-muted mb-1">
+                <span><i class="bi bi-shield-check text-success"></i> Lesen Diperlukan:</span>
+                <strong class="text-dark">Kelas B2</strong>
+              </div>
+              <div class="d-flex justify-content-between text-muted">
+                <span><i class="bi bi-geo-alt text-danger"></i> Ambil di:</span>
+                <span class="text-dark">Brinchang Town</span>
+              </div>
+            </div>
+
+            <button class="btn btn-outline-primary w-100 fw-bold btn-sm py-2" onclick="switchPwaTab('checkout')">
+              Pilih Motosikal Ini
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ==========================================
+             SCREEN 2: CHECKOUT & 10-MIN TEMPORARY HOLD
+             ========================================== -->
+        <div id="screen-checkout" class="pwa-screen d-none">
+          
+          <!-- Live 10-Minute Hold Banner -->
+          <div class="hold-timer-badge mb-3">
+            <div>
+              <small class="d-block text-white-50" style="font-size: 0.68rem; line-height: 1;">TEMPORARY HOLD INVENTORI</small>
+              <span class="fw-bold" style="font-size: 0.85rem;"><i class="bi bi-lock-fill"></i> Dikunci Khas Untuk Anda</span>
+            </div>
+            <div class="text-end">
+              <span id="hold-timer-text" class="badge bg-white text-danger fw-bold fs-6">10:00</span>
+            </div>
+          </div>
+
+          <div class="alert alert-info py-2 px-3 small rounded-3 mb-3" style="font-size: 0.72rem;">
+            <i class="bi bi-shield-check"></i> Motosikal ini dikunci dari tempahan penyewa lain selama 10 minit sementara anda melengkapkan bayaran di AffanPay.
+          </div>
+
+          <!-- Booking Summary Card -->
+          <div class="pwa-card">
+            <h6 class="fw-bold mb-2 pb-2 border-bottom"><i class="bi bi-receipt text-primary"></i> Ringkasan Tempahan</h6>
+            
+            <div class="d-flex gap-2 mb-3">
+              <div class="bg-primary-subtle text-primary p-2 rounded-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                <i class="bi bi-bicycle fs-3"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold mb-0">Yamaha NVX 155 ABS</h6>
+                <small class="text-muted d-block" style="font-size: 0.7rem;">Pemilik: Cameron Moto Rental</small>
+                <span class="badge bg-secondary" style="font-size: 0.65rem;">No Plat Dilindungi: V*** 8291</span>
+              </div>
+            </div>
+
+            <div class="small bg-light p-2 rounded-3 mb-3" style="font-size: 0.72rem;">
+              <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted">Mula:</span>
+                <span class="fw-bold">Sabtu, 18 Okt 2026, 10:00 AM</span>
+              </div>
+              <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted">Tamat:</span>
+                <span class="fw-bold">Ahad, 19 Okt 2026, 10:00 AM</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted">Tempoh:</span>
+                <span class="badge bg-primary">Pakej 24 Jam</span>
+              </div>
+            </div>
+
+            <!-- Price Breakdown Decoupled -->
+            <h6 class="fw-bold small mb-2 text-uppercase text-secondary" style="font-size: 0.7rem;">Pecahan Bayaran Telus:</h6>
+            <div class="small border-top pt-2" style="font-size: 0.75rem;">
+              <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted">Kadar Sewaan Asas (24j Hujung Minggu):</span>
+                <span>RM 90.00</span>
+              </div>
+              <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted">
+                  Deposit Keselamatan 
+                  <i class="bi bi-info-circle text-primary" title="Dipulangkan selepas motosikal dipulangkan dalam keadaan baik"></i>:
+                </span>
+                <span class="text-success fw-semibold">RM 50.00</span>
+              </div>
+              <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
+                <span class="text-muted">
+                  Caj Transaksi (AffanPay RM1 + Platform RM1):
+                </span>
+                <span>RM 2.00</span>
+              </div>
+              <div class="d-flex justify-content-between fs-6 fw-bold text-dark">
+                <span>Jumlah Perlu Dibayar:</span>
+                <span class="text-primary">RM 142.00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Renter Info Input -->
+          <div class="pwa-card">
+            <h6 class="fw-bold mb-2 pb-2 border-bottom" style="font-size: 0.8rem;"><i class="bi bi-person text-primary"></i> Maklumat Penyewa</h6>
+            <div class="mb-2">
+              <label class="form-label text-muted small mb-1" style="font-size: 0.68rem;">NAMA PENUH</label>
+              <input type="text" class="form-control form-control-sm" value="Muhammad Hafiz bin Razak" readonly>
+            </div>
+            <div class="mb-2">
+              <label class="form-label text-muted small mb-1" style="font-size: 0.68rem;">NO TELEFON (WHATSAPP)</label>
+              <input type="text" class="form-control form-control-sm" value="017-3829102" readonly>
+            </div>
+            <small class="text-muted" style="font-size: 0.65rem;">
+              <i class="bi bi-whatsapp text-success"></i> Notifikasi tempahan akan dihantar melalui WhatsApp.
+            </small>
+          </div>
+
+          <!-- CTA to AffanPay Mock -->
+          <div class="d-grid gap-2">
+            <a href="affanpay.html" class="btn btn-success fw-bold py-2 shadow-sm">
+              <i class="bi bi-credit-card-2-front-fill me-1"></i> Bayar RM 142.00 di AffanPay
+            </a>
+            <button class="btn btn-outline-secondary btn-sm" onclick="switchPwaTab('explore')">
+              Batalkan & Lepaskan Hold
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ==========================================
+             SCREEN 3: MUAT NAIK LESEN (Per Motorcycle)
+             ========================================== -->
+        <div id="screen-license" class="pwa-screen d-none">
+          <div class="pwa-card bg-primary-subtle border-primary-subtle text-primary">
+            <h6 class="fw-bold mb-1"><i class="bi bi-shield-lock-fill"></i> Muat Naik Lesen Memandu</h6>
+            <p class="small mb-0" style="font-size: 0.72rem;">
+              Mengikut polisi keselamatan sewaan, <strong>setiap motosikal yang ditempah memerlukan dokumen lesen memandu penunggang yang sah</strong> secara berasingan.
+            </p>
+          </div>
+
+          <!-- License Item 1: Motorcycle 1 -->
+          <div class="pwa-card">
+            <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+              <div>
+                <span class="badge bg-primary">Motosikal 1 daripada 1</span>
+                <h6 class="fw-bold mb-0 mt-1">Yamaha NVX 155 ABS</h6>
+              </div>
+              <span class="badge bg-warning text-dark" id="license-badge-status">
+                <i class="bi bi-clock"></i> Belum Disemak
+              </span>
+            </div>
+
+            <p class="small text-muted mb-2" style="font-size: 0.7rem;">
+              Keperluan: Lesen Memandu Kompeten (CDL) Kelas B2 atau B Penuh yang belum tamat tempoh.
+            </p>
+
+            <div class="border border-2 border-dashed rounded-3 p-3 text-center mb-3 bg-light" id="license-dropzone">
+              <i class="bi bi-camera fs-1 text-primary d-block mb-1"></i>
+              <strong class="d-block small" style="font-size: 0.75rem;">Ambil Foto Lesen / Muat Naik Fail</strong>
+              <small class="text-muted d-block mb-2" style="font-size: 0.65rem;">Format JPG, PNG atau PDF (Maks 5MB)</small>
+              <button class="btn btn-sm btn-outline-primary fw-semibold" onclick="simulateLicenseUpload()">
+                <i class="bi bi-upload"></i> Pilih Dokumen Lesen
+              </button>
+            </div>
+
+            <!-- Uploaded Preview Simulator -->
+            <div class="d-none bg-white border rounded-3 p-2 mb-3" id="license-preview">
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-file-earmark-person-fill text-success fs-3"></i>
+                  <div>
+                    <span class="fw-bold small d-block">lesen_hafiz_b2.jpg</span>
+                    <small class="text-muted" style="font-size: 0.65rem;">1.4 MB • Muat naik berjaya</small>
+                  </div>
+                </div>
+                <button class="btn btn-sm btn-outline-danger p-1" onclick="resetLicenseUpload()"><i class="bi bi-trash"></i></button>
+              </div>
+            </div>
+
+            <button class="btn btn-primary w-100 btn-sm fw-bold" onclick="showToast('Dokumen lesen disimpan dengan selamat dalam storan peribadi.'); switchPwaTab('active');">
+              Simpan & Teruskan ke Pas Tempahan
+            </button>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             SCREEN 4: TEMPAHAN AKTIF & PAS SERAHAN
+             ========================================== -->
+        <div id="screen-active" class="pwa-screen d-none">
+          
+          <div class="pwa-card bg-success text-white text-center py-3">
+            <span class="badge bg-white text-success fw-bold mb-1">Status: Disahkan (Confirmed)</span>
+            <h5 class="fw-bold mb-0">Pas Serahan Motosikal</h5>
+            <small class="text-white-50" style="font-size: 0.72rem;">No Rujukan: <strong>BK-20261017-8492</strong></small>
+          </div>
+
+          <!-- Pickup QR Code Pass -->
+          <div class="pwa-card text-center">
+            <small class="text-muted d-block mb-2" style="font-size: 0.7rem;">TUNJUKKAN KOD INI KEPADA PEMILIK SEMASA AMBIL KUNCI</small>
+            <div class="p-3 bg-light rounded-3 d-inline-block border mb-2">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BK-20261017-8492" width="140" height="140" alt="QR Tempahan">
+            </div>
+            <p class="small fw-bold text-dark mb-1">Yamaha NVX 155 ABS</p>
+            <span class="badge bg-primary mb-2">No Plat: VAA 8291</span>
+            
+            <div class="alert alert-warning py-2 text-start small mb-0" style="font-size: 0.7rem;">
+              <i class="bi bi-exclamation-triangle-fill text-warning me-1"></i>
+              <strong>Peringatan Serahan:</strong> Pemilik akan memeriksa lesen memandu asal dan mengambil gambar odometer motosikal sebelum kunci diserahkan.
+            </div>
+          </div>
+
+          <!-- Store Location Card -->
+          <div class="pwa-card">
+            <h6 class="fw-bold small mb-2"><i class="bi bi-geo-alt-fill text-danger"></i> Lokasi Premis Pemilik</h6>
+            <p class="small text-muted mb-2" style="font-size: 0.72rem;">
+              <strong>Cameron Moto Rental</strong><br>
+              No 12, Medan Selera, Tanah Rata, 39000 Cameron Highlands, Pahang.
+            </p>
+            <div class="d-grid gap-2">
+              <a href="https://maps.google.com" target="_blank" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-map"></i> Buka Google Maps
+              </a>
+              <a href="https://wa.me/60123456789" class="btn btn-sm btn-outline-success">
+                <i class="bi bi-whatsapp"></i> Hubungi Pemilik (WhatsApp)
+              </a>
+            </div>
+          </div>
+
+          <div class="text-center mb-3">
+            <button class="btn btn-link text-danger text-decoration-none small" style="font-size: 0.72rem;" onclick="switchPwaTab('cancel')">
+              <i class="bi bi-x-circle"></i> Perlu batalkan tempahan ini? Semak Polisi Refund
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ==========================================
+             SCREEN 5: PEMBATALAN & KALKULATOR REFUND
+             ========================================== -->
+        <div id="screen-cancel" class="pwa-screen d-none">
+          
+          <div class="pwa-card bg-danger-subtle border-danger-subtle text-danger">
+            <h6 class="fw-bold mb-1"><i class="bi bi-calculator-fill"></i> Aliran Pembatalan & Refund</h6>
+            <p class="small mb-0" style="font-size: 0.72rem;">
+              Pengiraan refund dikawal oleh <strong>polisi pemilik snapshot</strong> yang dipersetujui semasa checkout. Keputusan kelulusan adalah hak pemilik motosikal.
+            </p>
+          </div>
+
+          <!-- Interactive Refund Simulator -->
+          <div class="pwa-card">
+            <h6 class="fw-bold small mb-2 pb-1 border-bottom">Simulasi Masa Pembatalan</h6>
+            <label class="form-label small text-muted mb-1" style="font-size: 0.7rem;">
+              Baki Masa Sebelum Waktu Mula Sewaan:
+            </label>
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <input type="range" class="form-range flex-grow-1" min="2" max="48" value="30" id="refund-slider" oninput="updateRefundSlider(this.value)">
+              <span class="badge bg-dark fs-7" id="refund-hours-label">30 Jam</span>
+            </div>
+
+            <div class="alert alert-secondary py-2 small mb-3" id="calc-refund-rule" style="font-size: 0.7rem;">
+              ≥ 24 Jam sebelum waktu mula sewaan (Polisi Pemilik: 75% refund sewaan)
+            </div>
+
+            <!-- Calculation Output Breakdown -->
+            <div class="bg-light p-2 rounded-3 small mb-3" style="font-size: 0.72rem;">
+              <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted">Kadar Kelayakan Refund:</span>
+                <strong class="text-primary" id="calc-refund-percent">75%</strong>
+              </div>
+              <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted">Refund Sewaan (RM 90 × peratus):</span>
+                <span class="fw-semibold text-dark" id="calc-refund-rent">RM 67.50</span>
+              </div>
+              <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted">Deposit Keselamatan (Pulang Penuh):</span>
+                <span class="fw-semibold text-success" id="calc-refund-deposit">RM 50.00</span>
+              </div>
+              <div class="d-flex justify-content-between mb-2 pb-1 border-bottom">
+                <span class="text-muted">Caj Transaksi (AffanPay + Platform):</span>
+                <span class="text-danger" id="calc-refund-fee">RM 2.00 (Hangus)</span>
+              </div>
+              <div class="d-flex justify-content-between fs-6 fw-bold">
+                <span>Anggaran Jumlah Dipulangkan:</span>
+                <span class="text-success" id="calc-refund-total">RM 117.50</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small text-muted mb-1" style="font-size: 0.7rem;">SEBAB PEMBATALAN (WAJIB DILIHAT PEMILIK)</label>
+              <textarea class="form-control form-control-sm" rows="2" placeholder="Contoh: Tanah runtuh di laluan jalan Cameron Highlands..."></textarea>
+            </div>
+
+            <button class="btn btn-danger w-100 btn-sm fw-bold py-2" onclick="showToast('Permohonan pembatalan dihantar kepada pemilik motosikal untuk kelulusan.', 'warning'); switchPwaTab('active');">
+              <i class="bi bi-send-fill"></i> Hantar Permohonan Batal kepada Pemilik
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Bottom Navigation Bar (PWA Fixed Bar) -->
+      <nav class="pwa-bottom-nav">
+        <div class="pwa-nav-item active" id="nav-explore" onclick="switchPwaTab('explore')">
+          <i class="bi bi-search"></i>
+          <span>Cari</span>
+        </div>
+        <div class="pwa-nav-item" id="nav-checkout" onclick="switchPwaTab('checkout')">
+          <i class="bi bi-clock-history"></i>
+          <span>Hold 10m</span>
+          <span class="pwa-nav-badge">1</span>
+        </div>
+        <div class="pwa-nav-item" id="nav-license" onclick="switchPwaTab('license')">
+          <i class="bi bi-person-vcard"></i>
+          <span>Lesen</span>
+        </div>
+        <div class="pwa-nav-item" id="nav-active" onclick="switchPwaTab('active')">
+          <i class="bi bi-qr-code-scan"></i>
+          <span>Pas Aktif</span>
+        </div>
+        <div class="pwa-nav-item" id="nav-cancel" onclick="switchPwaTab('cancel')">
+          <i class="bi bi-calculator"></i>
+          <span>Refund</span>
+        </div>
+      </nav>
+
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/mockup.js"></script>
+  <script>
+    function simulateLicenseUpload() {
+      document.getElementById('license-dropzone').classList.add('d-none');
+      document.getElementById('license-preview').classList.remove('d-none');
+      const badge = document.getElementById('license-badge-status');
+      badge.className = 'badge bg-success';
+      badge.innerHTML = '<i class="bi bi-check-circle"></i> Berjaya Dimuat Naik';
+      showToast('Lesen memandu penunggang berjaya dimuat naik.', 'success');
+    }
+
+    function resetLicenseUpload() {
+      document.getElementById('license-dropzone').classList.remove('d-none');
+      document.getElementById('license-preview').classList.add('d-none');
+      const badge = document.getElementById('license-badge-status');
+      badge.className = 'badge bg-warning text-dark';
+      badge.innerHTML = '<i class="bi bi-clock"></i> Belum Disemak';
+    }
+
+    function updateRefundSlider(val) {
+      document.getElementById('refund-hours-label').innerText = val + ' Jam';
+      calculateRefundPreview(parseInt(val));
+    }
+  </script>
+</body>
+</html>

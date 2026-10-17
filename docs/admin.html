@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konsol Pentadbir MotoSewa — Platform Administration</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/mockup.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <!-- Desktop Notice on very small screens -->
+  <div class="d-md-none bg-danger text-white text-center py-2 px-3 small">
+    <i class="bi bi-display"></i> <strong>Nota Paparan:</strong> Konsol Admin dioptimumkan khas untuk skrin monitor Desktop bagi analisis data berketumpatan tinggi.
+  </div>
+
+  <div class="d-flex">
+
+    <!-- Admin Desktop Sidebar -->
+    <aside class="admin-sidebar d-flex flex-column p-3">
+      <div class="d-flex align-items-center gap-2 mb-4 px-2">
+        <span class="badge bg-primary p-2 rounded-2"><i class="bi bi-shield-lock-fill fs-5"></i></span>
+        <div>
+          <h6 class="mb-0 fw-bold text-white">MotoSewa Admin</h6>
+          <small class="text-white-50" style="font-size: 0.65rem;">Platform Governance</small>
+        </div>
+      </div>
+
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="#tab-admin-overview" class="nav-link active" data-bs-toggle="pill">
+            <i class="bi bi-grid-1x2-fill me-2"></i> Ringkasan Platform
+          </a>
+        </li>
+        <li>
+          <a href="#tab-admin-owners" class="nav-link" data-bs-toggle="pill">
+            <i class="bi bi-shop-window me-2"></i> Pengesahan Pemilik
+            <span class="badge bg-danger ms-auto" style="font-size: 0.65rem;">2 Menunggu</span>
+          </a>
+        </li>
+        <li>
+          <a href="#tab-admin-bookings" class="nav-link" data-bs-toggle="pill">
+            <i class="bi bi-journal-text me-2"></i> Lejar Tempahan Global
+          </a>
+        </li>
+        <li>
+          <a href="#tab-admin-settlements" class="nav-link" data-bs-toggle="pill">
+            <i class="bi bi-bank2 me-2"></i> Pelepasan 48j (Settlements)
+            <span class="badge bg-warning text-dark ms-auto" style="font-size: 0.65rem;">RM 14.2k</span>
+          </a>
+        </li>
+        <li>
+          <a href="#tab-admin-audit" class="nav-link" data-bs-toggle="pill">
+            <i class="bi bi-clipboard2-data-fill me-2"></i> Jejak Audit Sistem
+          </a>
+        </li>
+      </ul>
+
+      <hr class="border-secondary">
+      <div class="d-flex align-items-center justify-content-between px-2">
+        <small class="text-white-50" style="font-size: 0.7rem;"><i class="bi bi-person-gear"></i> Root Administrator</small>
+        <a href="index.html" class="btn btn-sm btn-outline-secondary py-0 px-2" title="Keluar ke Hub"><i class="bi bi-box-arrow-left"></i></a>
+      </div>
+    </aside>
+
+    <!-- Admin Main Body (Desktop Dense) -->
+    <div class="flex-grow-1 p-4" style="background-color: #f8fafc; min-height: 100vh; overflow-x: auto;">
+      
+      <!-- Top Bar -->
+      <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <div>
+          <h4 class="fw-bold mb-0 text-dark">Konsol Pengurusan Platform MotoSewa</h4>
+          <small class="text-muted">Penyeliaan multi-vendor, kepatuhan dokumen lesen, audit kewangan, dan pelepasan dana.</small>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span class="badge bg-success-subtle text-success border border-success-subtle py-2 px-3">
+            <i class="bi bi-circle-fill text-success" style="font-size: 0.5rem;"></i> AffanPay Webhook: Online & Idempotent
+          </span>
+          <a href="affanpay.html" class="btn btn-sm btn-outline-dark"><i class="bi bi-credit-card"></i> Uji Gateway</a>
+        </div>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div class="tab-content">
+
+        <!-- ==========================================
+             TAB 1: PLATFORM OVERVIEW (Dense KPIs)
+             ========================================== -->
+        <div class="tab-pane fade show active" id="tab-admin-overview">
+          
+          <div class="row g-3 mb-4">
+            <div class="col-xl-3 col-sm-6">
+              <div class="card border-0 shadow-sm p-3 bg-white rounded-3">
+                <small class="text-muted text-uppercase fw-bold" style="font-size: 0.7rem;">JUMLAH GMV TRANSAKSI (OKT)</small>
+                <h3 class="fw-bold text-dark my-1">RM 128,450.00</h3>
+                <small class="text-success"><i class="bi bi-graph-up-arrow"></i> +14.2% berbanding bulan lepas</small>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-sm-6">
+              <div class="card border-0 shadow-sm p-3 bg-white rounded-3">
+                <small class="text-muted text-uppercase fw-bold" style="font-size: 0.7rem;">KUTIPAN CAJ PLATFORM (RM1/TXN)</small>
+                <h3 class="fw-bold text-primary my-1">RM 1,420.00</h3>
+                <small class="text-muted">1,420 transaksi tempahan selesai</small>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-sm-6">
+              <div class="card border-0 shadow-sm p-3 bg-white rounded-3">
+                <small class="text-muted text-uppercase fw-bold" style="font-size: 0.7rem;">PENGUSAHA BERDAFTAR</small>
+                <h3 class="fw-bold text-warning my-1">24 Pemilik</h3>
+                <small class="text-muted">18 Aktif • 4 Menunggu Kelulusan • 2 Digantung</small>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-sm-6">
+              <div class="card border-0 shadow-sm p-3 bg-white rounded-3">
+                <small class="text-muted text-uppercase fw-bold" style="font-size: 0.7rem;">JUMLAH MOTOSIKAL AKTIF</small>
+                <h3 class="fw-bold text-success my-1">184 Unit</h3>
+                <small class="text-muted">165 Disewa/Tersedia • 19 Penyelenggaraan</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pending Approvals Widget -->
+          <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+              <h6 class="fw-bold mb-0"><i class="bi bi-clock-history text-danger"></i> Profil Pemilik Menunggu Kelulusan Pendaftaran (FR-OWNER-01)</h6>
+              <span class="badge bg-danger">2 Tindakan Diperlukan</span>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover admin-table-dense mb-0">
+                <thead>
+                  <tr>
+                    <th>Tarikh Daftar</th>
+                    <th>Nama Perniagaan</th>
+                    <th>Pemilik / Wakil</th>
+                    <th>Lokasi Premis</th>
+                    <th>No SSM / Rujukan</th>
+                    <th>Status</th>
+                    <th>Tindakan Pentadbir</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>17 Okt 2026</td>
+                    <td><strong>Bintang Highlands Motor</strong></td>
+                    <td>Kamarul Baharin (019-2819021)</td>
+                    <td>Brinchang Point, Cameron Highlands</td>
+                    <td><code>202603091822-X</code></td>
+                    <td><span class="badge bg-warning text-dark">pending</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-success py-0 px-2 fw-semibold" onclick="showToast('Pemilik Bintang Highlands Motor diluluskan!', 'success')">
+                        <i class="bi bi-check-lg"></i> Luluskan
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger py-0 px-2">Tolak</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>16 Okt 2026</td>
+                    <td><strong>Valley Scooters Ringlet</strong></td>
+                    <td>Wong Seng Fatt (012-4419201)</td>
+                    <td>Jalan Besar, Ringlet</td>
+                    <td><code>202401089201-A</code></td>
+                    <td><span class="badge bg-warning text-dark">pending</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-success py-0 px-2 fw-semibold" onclick="showToast('Pemilik Valley Scooters diluluskan!', 'success')">
+                        <i class="bi bi-check-lg"></i> Luluskan
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger py-0 px-2">Tolak</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ==========================================
+             TAB 2: PENGESAHAN PEMILIK
+             ========================================== -->
+        <div class="tab-pane fade" id="tab-admin-owners">
+          <h5 class="fw-bold mb-3">Pengurusan Vendor & Pemilik Motosikal</h5>
+          <div class="alert alert-secondary small">
+            Admin platform bertanggungjawab mengesahkan kesahihan kedai dan meluluskan penerbitan inventori awam. Pemilik yang digantung (`suspended`) akan disembunyikan daripada carian awam.
+          </div>
+          <p class="text-muted small">Semua pengusaha mesti mematuhi syarat pendaftaran perniagaan dan pemeriksaan keselamatan motosikal berkala.</p>
+        </div>
+
+        <!-- ==========================================
+             TAB 3: LEJAR TEMPAHAN GLOBAL
+             ========================================== -->
+        <div class="tab-pane fade" id="tab-admin-bookings">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0">Lejar Tempahan Seluruh Marketplace</h5>
+              <small class="text-muted">Data merentasi semua pemilik bagi tujuan audit dan sokongan pertikaian.</small>
+            </div>
+            <input type="text" class="form-control form-control-sm w-auto" placeholder="Cari No Rujukan / Nama...">
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-hover admin-table-dense mb-0">
+                <thead>
+                  <tr>
+                    <th>Rujukan</th>
+                    <th>Kedai / Pemilik</th>
+                    <th>Penyewa</th>
+                    <th>Motosikal</th>
+                    <th>Masa Sewaan</th>
+                    <th>Status Tempahan</th>
+                    <th>Status Bayaran</th>
+                    <th>Lesen per Motor</th>
+                    <th>Audit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>BK-20261017-8492</code></td>
+                    <td>Cameron Moto Rental</td>
+                    <td>M. Hafiz Razak</td>
+                    <td>Yamaha NVX 155 (VAA 8291)</td>
+                    <td>18/10/26 10:00 - 19/10/26 10:00</td>
+                    <td><span class="badge bg-info text-dark">ready_for_pickup</span></td>
+                    <td><span class="badge bg-success">paid (AffanPay)</span></td>
+                    <td><span class="badge bg-success"><i class="bi bi-check-circle"></i> Disahkan</span></td>
+                    <td><button class="btn btn-sm btn-outline-secondary py-0 px-1" onclick="showToast('Snapshot harga: RM90 sewaan, RM50 deposit, RM2 fi. Polisi: 75%/50%/0%.')"><i class="bi bi-eye"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td><code>BK-MANUAL-7102</code></td>
+                    <td>Cameron Moto Rental</td>
+                    <td>Tan Wei Kiat</td>
+                    <td>Yamaha Y15ZR (VAA 2319)</td>
+                    <td>17/10/26 14:00 - 18/10/26 14:00</td>
+                    <td><span class="badge bg-primary">ongoing</span></td>
+                    <td><span class="badge bg-secondary">paid (Tunai Pemilik)</span></td>
+                    <td><span class="badge bg-secondary">Manual IC</span></td>
+                    <td><button class="btn btn-sm btn-outline-secondary py-0 px-1"><i class="bi bi-eye"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td><code>BK-20261017-3310</code></td>
+                    <td>Highlands Bikers Hub</td>
+                    <td>Siti Nur Aishah</td>
+                    <td>Honda Vario 160 (VAA 5541)</td>
+                    <td>19/10/26 09:00 - 20/10/26 09:00</td>
+                    <td><span class="badge bg-danger">cancellation_pending</span></td>
+                    <td><span class="badge bg-success">paid</span></td>
+                    <td><span class="badge bg-success">Disahkan</span></td>
+                    <td><button class="btn btn-sm btn-outline-secondary py-0 px-1"><i class="bi bi-eye"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             TAB 4: PELEPASAN DANA (SETTLEMENTS 48h)
+             ========================================== -->
+        <div class="tab-pane fade" id="tab-admin-settlements">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0">Konsol Pelepasan Dana (Settlement Pipeline 48 Jam)</h5>
+              <small class="text-muted">Menjejak aliran dana masuk dari gateway AffanPay (24j) dan keluar kepada pemilik (48j).</small>
+            </div>
+            <button class="btn btn-sm btn-success fw-bold" onclick="showToast('Kelompok pelepasan dana kepada 14 pemilik telah diproses melalui bank pindahan.', 'success')">
+              <i class="bi bi-cash-coin"></i> Laksana Kelompok Payout Hari Ini
+            </button>
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-hover admin-table-dense mb-0">
+                <thead>
+                  <tr>
+                    <th>Kelompok ID</th>
+                    <th>Nama Pemilik Kedai</th>
+                    <th>Akaun Bank Sasaran</th>
+                    <th>Kutipan Kasar</th>
+                    <th>Caj SaaS / Komisen</th>
+                    <th>Amaun Bersih Salur</th>
+                    <th>Fasa Aliran</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>SETTLE-B104-01</code></td>
+                    <td><strong>Cameron Moto Rental</strong></td>
+                    <td>Maybank (562109418291)</td>
+                    <td>RM 1,420.00</td>
+                    <td>-RM 20.00 (RM1 x 20 sewaan)</td>
+                    <td><strong class="text-success">RM 1,400.00</strong></td>
+                    <td>Fasa 2 (Platform ➔ Pemilik)</td>
+                    <td><span class="badge bg-warning text-dark">pending_owner_release</span></td>
+                  </tr>
+                  <tr>
+                    <td><code>SETTLE-B104-02</code></td>
+                    <td><strong>Highlands Bikers Hub</strong></td>
+                    <td>CIMB (800918237190)</td>
+                    <td>RM 890.00</td>
+                    <td>-RM 12.00</td>
+                    <td><strong class="text-success">RM 878.00</strong></td>
+                    <td>Fasa 2 (Platform ➔ Pemilik)</td>
+                    <td><span class="badge bg-warning text-dark">pending_owner_release</span></td>
+                  </tr>
+                  <tr>
+                    <td><code>SETTLE-B103-99</code></td>
+                    <td><strong>Tanah Rata Rides</strong></td>
+                    <td>RHB (214019284102)</td>
+                    <td>RM 2,100.00</td>
+                    <td>-RM 30.00</td>
+                    <td><strong>RM 2,070.00</strong></td>
+                    <td>Fasa 3 (Selesai Payout)</td>
+                    <td><span class="badge bg-success">released_to_owner</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             TAB 5: JEJAK AUDIT SISTEM (audit_logs)
+             ========================================== -->
+        <div class="tab-pane fade" id="tab-admin-audit">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0">Jejak Audit Seluruh Sistem (`audit_logs`)</h5>
+              <small class="text-muted">Merekodkan setiap tindakan pentadbiran, perubahan harga, dan peralihan status secara kekal.</small>
+            </div>
+            <span class="badge bg-dark">Immutable Log Table</span>
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-hover admin-table-dense mb-0 font-monospace" style="font-size: 0.78rem;">
+                <thead class="table-light">
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Actor (User)</th>
+                    <th>Action</th>
+                    <th>Entity Model</th>
+                    <th>ID</th>
+                    <th>Perubahan (Diff Before/After)</th>
+                    <th>IP Address</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2026-10-17 10:42:01</td>
+                    <td>user:14 (Shahrul)</td>
+                    <td><span class="badge bg-warning text-dark">rate.updated</span></td>
+                    <td>App\Models\RentalRate</td>
+                    <td>42</td>
+                    <td><code>{"old_price": 85.00, "new_price": 90.00}</code></td>
+                    <td>175.143.20.12</td>
+                  </tr>
+                  <tr>
+                    <td>2026-10-17 10:35:19</td>
+                    <td>system (AffanPay)</td>
+                    <td><span class="badge bg-success">webhook.processed</span></td>
+                    <td>App\Models\Payment</td>
+                    <td>89</td>
+                    <td><code>{"event_id": "wh_aff_8912", "status": "paid"}</code></td>
+                    <td>103.22.201.55</td>
+                  </tr>
+                  <tr>
+                    <td>2026-10-17 10:35:20</td>
+                    <td>system (Event)</td>
+                    <td><span class="badge bg-primary">booking.confirmed</span></td>
+                    <td>App\Models\Booking</td>
+                    <td>54</td>
+                    <td><code>{"from": "pending_payment", "to": "confirmed"}</code></td>
+                    <td>127.0.0.1</td>
+                  </tr>
+                  <tr>
+                    <td>2026-10-17 09:12:44</td>
+                    <td>user:1 (Admin)</td>
+                    <td><span class="badge bg-info text-dark">owner.approved</span></td>
+                    <td>App\Models\OwnerProfile</td>
+                    <td>12</td>
+                    <td><code>{"status": "active"}</code></td>
+                    <td>60.54.120.91</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/mockup.js"></script>
+</body>
+</html>
